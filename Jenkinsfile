@@ -17,6 +17,13 @@ pipeline {
                 sh 'npm i'
             }
         }
+
+         stage('NpmServe') {
+                steps {
+                    sh 'npm run serve'
+                    input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                }
+            }
          stage('NpmBuild') {
                 steps {
                     sh 'npm run build'
