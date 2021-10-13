@@ -1,32 +1,25 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
-    }
-     environment {
-            CI = 'true'
-        }
+    agent any       // 执行构建的节点
     stages {
-        stage('Build') {
+        stage('EchoNodeVersion') {
             steps {
-                sh 'npm install'
+                sh 'node -v'
             }
         }
-        // stage('Test') {
-        //             steps {
-        //                 // sh "chmod +x -R ${env.WORKSPACE}"
-        //                 sh './jenkins/scripts/test.sh'
-        //             }
-        //         }
-                stage('Deliver') {
-                            steps {
-                                sh './jenkins/scripts/deliver.sh'
-                                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                                sh './jenkins/scripts/kill.sh'
-                            }
-                        }
-
+        stage('NpmInstall') {
+            steps {
+                sh 'npm i'
+            }
+        }
+         stage('NpmBuild') {
+                steps {
+                    sh 'npm run build'
+                }
+            }
+    }
+    post {
+        always {
+            echo 'Finish!!'
+        }
     }
 }
