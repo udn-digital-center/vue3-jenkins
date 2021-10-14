@@ -18,12 +18,12 @@ pipeline {
             }
         }
 
-         stage('NpmServe') {
-                steps {
-                    sh 'npm run serve'
+//          stage('NpmServe') {
+//                 steps {
+//                     sh 'npm run serve'
                     
-                }
-            }
+//                 }
+//             }
          stage('NpmBuild') {
                 steps {
                     input message: 'Finished using the web site? (Click "Proceed" to continue)'
